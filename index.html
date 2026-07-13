@@ -26,7 +26,7 @@
     background-attachment:fixed;
     color:var(--ink);
     font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",sans-serif;
-    line-height:1.85; padding:26px 16px 230px; max-width:520px; margin:0 auto;
+    line-height:1.85; padding:26px 16px 48px; max-width:520px; margin:0 auto;
     -webkit-font-smoothing:antialiased;
   }
 
@@ -147,10 +147,9 @@
     font-family:"Hiragino Mincho ProN",serif; letter-spacing:.03em; }
 
   /* 下の入力バー */
-  .bar{ position:fixed; left:0; right:0; bottom:0; background:rgba(255,250,252,.95);
-    backdrop-filter:blur(8px); border-top:1px solid var(--line);
-    padding:10px 14px calc(12px + env(safe-area-inset-bottom, 0px));
-    max-width:520px; margin:0 auto; }
+  .bar{ background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:12px 14px 14px; margin:2px 0 16px;
+    box-shadow:0 6px 18px -12px rgba(255,90,138,.35); }
   .bar .barday{ text-align:center; font-size:11px; color:var(--sub); margin-bottom:8px;
     font-family:"Hiragino Mincho ProN",serif; }
   .bar .frow{ display:flex; gap:7px; overflow-x:auto; padding-bottom:9px; scrollbar-width:none; }
@@ -209,10 +208,8 @@
 </div>
 <div class="datenav" id="datenav"></div>
 <div id="calBox"></div>
-<div id="cheer" class="cheer"></div>
-<div id="todoList"></div>
 
-<!-- 下の入力バー -->
+<!-- 入力エリア（下に固定せず、やることの上に置く） -->
 <div class="bar" id="bar">
   <div class="barday" id="barday"></div>
   <div class="frow" id="barMakings"></div>
@@ -221,6 +218,9 @@
     <button id="todoAdd">入れる</button>
   </div>
 </div>
+
+<div id="cheer" class="cheer"></div>
+<div id="todoList"></div>
 
 <script>
   var KEY = 'begrace-best-day';
