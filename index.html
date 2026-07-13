@@ -46,7 +46,7 @@
     font-family:"Hiragino Mincho ProN",serif; color:var(--ink); }
   .sec-h .hint{ font-size:11.5px; color:var(--sub); margin-left:auto; }
 
-  /* 選ぶ世界（ひとつ） */
+  /* 選ぶ世界 */
   .world{ background:
       radial-gradient(circle at 12% 20%,#fff 0,#fff .8px,transparent 1.5px),
       radial-gradient(circle at 78% 28%,#d6d6e0 0,#d6d6e0 .7px,transparent 1.3px),
@@ -86,7 +86,33 @@
     border-radius:12px; padding:0 16px; font-size:14px; font-weight:700; cursor:pointer; }
   .mempty{ font-size:12.5px; color:var(--sub); text-align:center; padding:8px 10px 14px; line-height:2; }
 
-  /* 今日、やること */
+  /* 日付ナビ＆カレンダー */
+  .datenav{ display:flex; align-items:center; gap:8px; margin:2px 0 2px; }
+  .datenav .arw{ width:36px; height:36px; border-radius:50%; border:1px solid var(--line);
+    background:#fff; color:var(--gold-d); font-size:16px; cursor:pointer; flex:none; }
+  .datenav .lbl{ flex:1; text-align:center; font-size:14.5px; font-weight:700;
+    font-family:"Hiragino Mincho ProN",serif; color:var(--ink); }
+  .datenav .today-jump{ font-size:10.5px; color:var(--gold-d); display:block; margin-top:1px; font-family:inherit; font-weight:400; cursor:pointer; text-decoration:underline; }
+  .datenav .calbtn{ width:36px; height:36px; border-radius:50%; border:1px solid var(--line);
+    background:#fff; font-size:16px; cursor:pointer; flex:none; }
+  .datenav .calbtn.on{ background:var(--gold-bg); border-color:var(--gold-lt); }
+  .cal{ background:#fff; border:1px solid var(--line); border-radius:16px; padding:12px 12px 14px; margin:10px 0 2px;
+    box-shadow:0 6px 18px -12px rgba(255,90,138,.4); }
+  .cal-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+  .cal-head button{ border:none; background:none; color:var(--gold-d); font-size:16px; cursor:pointer; padding:4px 12px; }
+  .cal-head .ym{ font-size:14px; font-weight:700; font-family:"Hiragino Mincho ProN",serif; }
+  .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
+  .cal-wd{ text-align:center; font-size:10.5px; color:var(--sub); padding:3px 0 4px; }
+  .cal-cell{ position:relative; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
+    font-size:13px; border-radius:10px; cursor:pointer; color:var(--ink); }
+  .cal-cell.blank{ cursor:default; }
+  .cal-cell.today{ font-weight:800; color:var(--gold-d); }
+  .cal-cell.sel{ background:linear-gradient(135deg,var(--gold),var(--gold-d)); color:#fff; font-weight:700; }
+  .cal-cell .cdotm{ position:absolute; bottom:4px; left:50%; transform:translateX(-50%);
+    width:4px; height:4px; border-radius:50%; background:var(--gold); }
+  .cal-cell.sel .cdotm{ background:#fff; }
+
+  /* やること */
   .todo{ display:flex; align-items:flex-start; gap:12px; background:var(--card);
     border:1px solid var(--line); border-radius:15px; padding:14px 14px; margin-bottom:10px;
     animation:rise .35s ease; transition:background .35s, border-color .35s; }
@@ -99,7 +125,7 @@
   .todo .ttext{ font-size:15px; letter-spacing:.01em; word-break:break-word; }
   .todo .meta{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:7px; }
   .fchip{ display:inline-flex; align-items:center; gap:5px; font-size:11.5px;
-    color:var(--ink); background:#faf7f0; border:1px solid var(--line);
+    color:var(--ink); background:#faf4f7; border:1px solid var(--line);
     border-radius:20px; padding:3px 10px; }
   .fchip .cdot{ width:8px; height:8px; border-radius:50%; }
   .carry{ font-size:11px; color:var(--gold-d); background:var(--gold-bg);
@@ -116,7 +142,7 @@
   .todo.done .check{ background:linear-gradient(135deg,var(--gold),var(--gold-d)); border-color:var(--gold-d); }
   .todo.done .check::after{ opacity:1; }
   .todo.done .ttext{ color:var(--gold-d); }
-  .tempty{ text-align:center; color:var(--sub); font-size:13.5px; padding:30px 16px; line-height:2.1; }
+  .tempty{ text-align:center; color:var(--sub); font-size:13.5px; padding:26px 16px; line-height:2.1; }
   .cheer{ text-align:center; font-size:13px; color:var(--gold-d); margin:6px 0 2px;
     font-family:"Hiragino Mincho ProN",serif; letter-spacing:.03em; }
 
@@ -124,6 +150,8 @@
   .bar{ position:fixed; left:0; right:0; bottom:0; background:rgba(255,250,252,.95);
     backdrop-filter:blur(8px); border-top:1px solid var(--line); padding:12px 14px 16px;
     max-width:520px; margin:0 auto; }
+  .bar .barday{ text-align:center; font-size:11px; color:var(--sub); margin-bottom:8px;
+    font-family:"Hiragino Mincho ProN",serif; }
   .bar .frow{ display:flex; gap:7px; overflow-x:auto; padding-bottom:9px; scrollbar-width:none; }
   .bar .frow::-webkit-scrollbar{ display:none; }
   .barchip{ flex:none; display:inline-flex; align-items:center; gap:6px; font-size:12px;
@@ -155,7 +183,7 @@
   <div class="today" id="today"></div>
 </header>
 
-<!-- 選ぶ世界（ひとつ） -->
+<!-- 選ぶ世界 -->
 <div class="sec-h">
   <span class="dot"></span><h2>選ぶ世界</h2>
   <span class="hint">ひとつ</span>
@@ -173,19 +201,22 @@
   <button id="makingAdd">追加</button>
 </div>
 
-<!-- 今日、やること -->
+<!-- やること（日付で選ぶ） -->
 <div class="sec-h">
-  <span class="dot"></span><h2>今日、やること</h2>
+  <span class="dot"></span><h2 id="todoHeadTitle">今日、やること</h2>
   <span class="hint" id="progressHint"></span>
 </div>
+<div class="datenav" id="datenav"></div>
+<div id="calBox"></div>
 <div id="cheer" class="cheer"></div>
 <div id="todoList"></div>
 
 <!-- 下の入力バー -->
-<div class="bar">
+<div class="bar" id="bar">
+  <div class="barday" id="barday"></div>
   <div class="frow" id="barMakings"></div>
   <div class="irow">
-    <input id="todoInput" type="text" placeholder="今日やること を入れる" maxlength="80">
+    <input id="todoInput" type="text" placeholder="やること を入れる" maxlength="80">
     <button id="todoAdd">入れる</button>
   </div>
 </div>
@@ -196,17 +227,23 @@
   var WD = ['日','月','火','水','木','金','土'];
 
   var state = load();
-  var picked = null; // todo追加時に選んでいる「創っているもの」のid
+  var picked = null;      // todo追加時に選んでいる「創っているもの」のid
+  var sel = todayStr();   // いま見ている日
+  var calOpen = false;    // カレンダーの開閉
+  var calY, calM;         // カレンダー表示中の年・月(0-11)
+  (function(){ var d=new Date(); calY=d.getFullYear(); calM=d.getMonth(); })();
 
   function load(){
     try{
       var s = JSON.parse(localStorage.getItem(KEY));
       if(s && s.todos){
-        // 古い形（futures）から引き継ぎ
         if(!s.makings && s.futures) s.makings = s.futures;
         if(typeof s.world !== 'string') s.world = '';
         s.makings = s.makings || [];
-        s.todos.forEach(function(t){ if(t.makingId===undefined) t.makingId = (t.futureId!==undefined?t.futureId:null); });
+        s.todos.forEach(function(t){
+          if(t.makingId===undefined) t.makingId = (t.futureId!==undefined?t.futureId:null);
+          if(!t.date) t.date = t.created || todayStr();   // 日付が無い古いデータを引き継ぎ
+        });
         return s;
       }
     }catch(e){}
@@ -214,10 +251,10 @@
   }
   function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
 
-  function ymd(d){
-    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-  }
+  function ymd(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
   function todayStr(){ return ymd(new Date()); }
+  function parseYmd(s){ var p=s.split('-'); return new Date(+p[0], +p[1]-1, +p[2]); }
+  function addDays(s, n){ var d=parseYmd(s); d.setDate(d.getDate()+n); return ymd(d); }
   function uid(){ return Date.now().toString(36) + Math.floor(Math.random()*1000).toString(36); }
 
   function nextColor(){
@@ -232,10 +269,8 @@
 
   /* ---- 選ぶ世界 ---- */
   function setWorld(){
-    var el = document.getElementById('worldInput');
-    if(!el) return;
-    var t = el.value.trim();
-    if(!t) return;
+    var el = document.getElementById('worldInput'); if(!el) return;
+    var t = el.value.trim(); if(!t) return;
     state.world = t; save(); render();
   }
   function editWorld(){
@@ -245,9 +280,7 @@
 
   /* ---- 今、創っているもの ---- */
   function addMaking(){
-    var el = document.getElementById('makingInput');
-    var t = el.value.trim();
-    if(!t) return;
+    var el = document.getElementById('makingInput'); var t = el.value.trim(); if(!t) return;
     state.makings.push({ id:uid(), text:t, color:nextColor() });
     el.value=''; save(); render();
   }
@@ -260,14 +293,12 @@
     save(); render();
   }
 
-  /* ---- 今日、やること ---- */
+  /* ---- やること ---- */
   function addTodo(){
-    var el = document.getElementById('todoInput');
-    var t = el.value.trim();
-    if(!t) return;
-    state.todos.push({ id:uid(), text:t, makingId:picked, done:false, created:todayStr(), doneDate:null });
-    el.value=''; save(); render();
-    el.focus();
+    var el = document.getElementById('todoInput'); var t = el.value.trim(); if(!t) return;
+    var day = (sel < todayStr()) ? todayStr() : sel;   // 過去には入れない
+    state.todos.push({ id:uid(), text:t, makingId:picked, done:false, date:day, created:todayStr(), doneDate:null });
+    el.value=''; save(); render(); el.focus();
   }
   function toggleTodo(id){
     state.todos.forEach(function(t){
@@ -280,16 +311,80 @@
     save(); render();
   }
 
+  /* ---- 日付の見出し ---- */
+  function mdw(s){ var d=parseYmd(s); return (d.getMonth()+1)+'月'+d.getDate()+'日（'+WD[d.getDay()]+'）'; }
+  function dateLabel(s){
+    var today=todayStr();
+    if(s===today) return '今日　'+mdw(s);
+    if(s===addDays(today,1)) return '明日　'+mdw(s);
+    if(s===addDays(today,-1)) return '昨日　'+mdw(s);
+    return mdw(s);
+  }
+  function headTitle(s){
+    var today=todayStr();
+    if(s < today) return mdw(s)+' の記録';
+    if(s===today) return '今日、やること';
+    if(s===addDays(today,1)) return '明日、やること';
+    return mdw(s)+'、やること';
+  }
+
   /* ---- 表示 ---- */
   function render(){
     var today = todayStr();
     var d = new Date();
-    document.getElementById('today').textContent =
-      (d.getMonth()+1)+'月'+d.getDate()+'日（'+WD[d.getDay()]+'）';
+    document.getElementById('today').textContent = (d.getMonth()+1)+'月'+d.getDate()+'日（'+WD[d.getDay()]+'）';
 
-    // 選ぶ世界
-    var wb = document.getElementById('worldBox');
-    wb.innerHTML='';
+    renderWorld();
+    renderMakings();
+    renderDatenav();
+    renderCal();
+
+    // 見出し
+    document.getElementById('todoHeadTitle').textContent = headTitle(sel);
+
+    // その日のやること
+    var open, doneList;
+    if(sel < today){
+      // 過去＝記録：その日にやり終えたこと
+      open = [];
+      doneList = state.todos.filter(function(t){ return t.done && t.doneDate===sel; });
+    }else if(sel===today){
+      // 今日＝今日の予定＋過去からの持ち越し（未完了）
+      open = state.todos.filter(function(t){ return !t.done && t.date<=today; });
+      doneList = state.todos.filter(function(t){ return t.done && t.doneDate===today; });
+    }else{
+      // 未来＝その日の予定
+      open = state.todos.filter(function(t){ return !t.done && t.date===sel; });
+      doneList = state.todos.filter(function(t){ return t.done && t.doneDate===sel; });
+    }
+
+    var tl = document.getElementById('todoList');
+    tl.innerHTML='';
+    if(open.length===0 && doneList.length===0){
+      var msg = (sel<today) ? 'この日の記録は ありません。'
+               : (sel===today) ? '下の窓から、今日やることを入れてください。'
+               : '下の窓から、この日のやることを入れてください。';
+      tl.innerHTML = '<div class="tempty">'+msg+'</div>';
+    }
+    open.forEach(function(t){ tl.appendChild(todoRow(t, today)); });
+    doneList.forEach(function(t){ tl.appendChild(todoRow(t, today)); });
+
+    // 応援・数
+    var total = open.length + doneList.length;
+    var doneN = doneList.length;
+    document.getElementById('progressHint').textContent = total? (doneN+' / '+total):'';
+    var cheer = document.getElementById('cheer');
+    if(sel<today){ cheer.textContent = doneN>0 ? ('この日は '+doneN+' つ、動きました🤍') : ''; }
+    else{ cheer.textContent = doneN>0 ? ('今日は '+doneN+' つ、動けました🤍') : ''; }
+
+    // 入力バー（過去は見るだけ→隠す）
+    document.getElementById('bar').style.display = (sel<today) ? 'none' : '';
+    document.getElementById('barday').textContent = (sel===today) ? '' : (dateLabel(sel)+' に入れます');
+    renderBar();
+  }
+
+  function renderWorld(){
+    var wb = document.getElementById('worldBox'); wb.innerHTML='';
     if(state.world){
       var card = document.createElement('div'); card.className='world';
       card.innerHTML = '<div class="wlabel">生きたい世界</div><div class="wtext"></div><button class="wedit">書きなおす</button>';
@@ -303,40 +398,81 @@
       document.getElementById('worldAdd').onclick = setWorld;
       document.getElementById('worldInput').addEventListener('keydown', function(e){ if(e.key==='Enter') setWorld(); });
     }
+  }
 
-    // 今、創っているもの
-    var ml = document.getElementById('makingList');
-    ml.innerHTML='';
+  function renderMakings(){
+    var ml = document.getElementById('makingList'); ml.innerHTML='';
     if(state.makings.length===0){
       ml.innerHTML = '<div class="mempty">まだありません。<br>その世界のために、今つくっているものは？🤍</div>';
-    }else{
-      state.makings.forEach(function(m){
-        var row = document.createElement('div'); row.className='making';
-        row.innerHTML = '<span class="mdot" style="background:'+m.color+'"></span><span class="mtext"></span><button class="mdel">消す</button>';
-        row.querySelector('.mtext').textContent = m.text;
-        row.querySelector('.mdel').onclick = function(){ delMaking(m.id); };
-        ml.appendChild(row);
-      });
+      return;
     }
+    state.makings.forEach(function(m){
+      var row = document.createElement('div'); row.className='making';
+      row.innerHTML = '<span class="mdot" style="background:'+m.color+'"></span><span class="mtext"></span><button class="mdel">消す</button>';
+      row.querySelector('.mtext').textContent = m.text;
+      row.querySelector('.mdel').onclick = function(){ delMaking(m.id); };
+      ml.appendChild(row);
+    });
+  }
 
-    // 今日、やること
-    var open = state.todos.filter(function(t){ return !t.done; });
-    var doneToday = state.todos.filter(function(t){ return t.done && t.doneDate===today; });
-    var tl = document.getElementById('todoList');
-    tl.innerHTML='';
-    if(open.length===0 && doneToday.length===0){
-      tl.innerHTML = '<div class="tempty">下の窓から、今日やることを入れてください。</div>';
+  function renderDatenav(){
+    var nav = document.getElementById('datenav'); nav.innerHTML='';
+    var prev = document.createElement('button'); prev.className='arw'; prev.textContent='‹';
+    prev.onclick = function(){ sel = addDays(sel,-1); syncCalMonth(); render(); };
+    var lbl = document.createElement('div'); lbl.className='lbl';
+    lbl.textContent = dateLabel(sel);
+    if(sel!==todayStr()){
+      var jump = document.createElement('span'); jump.className='today-jump'; jump.textContent='今日にもどる';
+      jump.onclick = function(){ sel = todayStr(); syncCalMonth(); render(); };
+      lbl.appendChild(jump);
     }
-    open.forEach(function(t){ tl.appendChild(todoRow(t, today)); });
-    doneToday.forEach(function(t){ tl.appendChild(todoRow(t, today)); });
+    var next = document.createElement('button'); next.className='arw'; next.textContent='›';
+    next.onclick = function(){ sel = addDays(sel,1); syncCalMonth(); render(); };
+    var calbtn = document.createElement('button'); calbtn.className='calbtn'+(calOpen?' on':''); calbtn.textContent='📅';
+    calbtn.onclick = function(){ calOpen=!calOpen; if(calOpen) syncCalMonth(); render(); };
+    nav.appendChild(prev); nav.appendChild(lbl); nav.appendChild(next); nav.appendChild(calbtn);
+  }
 
-    var total = open.length + doneToday.length;
-    var doneN = doneToday.length;
-    document.getElementById('progressHint').textContent = total? (doneN+' / '+total):'';
-    var cheer = document.getElementById('cheer');
-    cheer.textContent = doneN>0 ? ('今日は '+doneN+' つ、動けました🤍') : '';
+  function syncCalMonth(){ var d=parseYmd(sel); calY=d.getFullYear(); calM=d.getMonth(); }
 
-    renderBar();
+  function dayHasTodo(s){
+    return state.todos.some(function(t){ return t.date===s || (t.done && t.doneDate===s); });
+  }
+
+  function renderCal(){
+    var box = document.getElementById('calBox'); box.innerHTML='';
+    if(!calOpen) return;
+    var cal = document.createElement('div'); cal.className='cal';
+
+    var head = document.createElement('div'); head.className='cal-head';
+    var pb=document.createElement('button'); pb.textContent='‹';
+    pb.onclick=function(){ calM--; if(calM<0){calM=11;calY--;} render(); };
+    var ym=document.createElement('div'); ym.className='ym'; ym.textContent=calY+'年 '+(calM+1)+'月';
+    var nb=document.createElement('button'); nb.textContent='›';
+    nb.onclick=function(){ calM++; if(calM>11){calM=0;calY++;} render(); };
+    head.appendChild(pb); head.appendChild(ym); head.appendChild(nb);
+    cal.appendChild(head);
+
+    var grid = document.createElement('div'); grid.className='cal-grid';
+    WD.forEach(function(w){ var c=document.createElement('div'); c.className='cal-wd'; c.textContent=w; grid.appendChild(c); });
+
+    var first = new Date(calY, calM, 1);
+    var startWd = first.getDay();
+    var days = new Date(calY, calM+1, 0).getDate();
+    var today = todayStr();
+    for(var i=0;i<startWd;i++){ var b=document.createElement('div'); b.className='cal-cell blank'; grid.appendChild(b); }
+    for(var day=1; day<=days; day++){
+      var s = ymd(new Date(calY, calM, day));
+      var cell = document.createElement('div'); cell.className='cal-cell';
+      if(s===today) cell.className+=' today';
+      if(s===sel) cell.className+=' sel';
+      cell.textContent = day;
+      if(dayHasTodo(s)){ var dot=document.createElement('span'); dot.className='cdotm'; cell.appendChild(dot); }
+      (function(ss){ cell.onclick=function(){ sel=ss; render(); }; })(s);
+      grid.appendChild(cell);
+    }
+    cal.appendChild(grid);
+    box.appendChild(cal);
   }
 
   function todoRow(t, today){
@@ -355,8 +491,8 @@
       chip.appendChild(document.createTextNode('→ '+m.text+' の真っ最中'));
       meta.appendChild(chip);
     }
-    if(!t.done && t.created && t.created < today){
-      var c = document.createElement('span'); c.className='carry'; c.textContent='昨日から';
+    if(!t.done && sel===today && t.date < today){
+      var c = document.createElement('span'); c.className='carry'; c.textContent='持ち越し';
       meta.appendChild(c);
     }
     if(meta.children.length) body.appendChild(meta);
@@ -367,8 +503,7 @@
   }
 
   function renderBar(){
-    var bf = document.getElementById('barMakings');
-    bf.innerHTML='';
+    var bf = document.getElementById('barMakings'); bf.innerHTML='';
     if(state.makings.length===0){ return; }
     state.makings.forEach(function(m){
       var c = document.createElement('div');
