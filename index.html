@@ -340,11 +340,6 @@
     var bf = document.getElementById('barMakings');
     bf.innerHTML='';
     if(state.makings.length===0){ return; }
-    var none = document.createElement('div');
-    none.className='barchip'+(picked===null?' on':'');
-    none.textContent='えらばない';
-    none.onclick=function(){ picked=null; renderBar(); };
-    bf.appendChild(none);
     state.makings.forEach(function(m){
       var c = document.createElement('div');
       c.className='barchip'+(picked===m.id?' on':'');
