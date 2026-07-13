@@ -79,10 +79,9 @@
   .making .mdot{ width:11px; height:11px; border-radius:50%; flex:none; }
   .making .mtext{ flex:1; font-size:14.5px; font-family:"Hiragino Mincho ProN",serif; }
   .making .mdel{ font-size:12px; color:var(--sub); background:none; border:none; cursor:pointer; padding:4px 6px; }
-  .making .mdone{ display:flex; align-items:center; gap:9px; margin:11px 0 1px; padding-left:21px; }
-  .making .mbar{ flex:1; height:8px; border-radius:6px; background:#f2e7ee; overflow:hidden; max-width:190px; }
+  .making .mdone{ margin:11px 0 2px; padding-left:21px; padding-right:2px; }
+  .making .mbar{ height:8px; border-radius:6px; background:#f2e7ee; overflow:hidden; }
   .making .mbar-fill{ height:100%; border-radius:6px; transition:width .45s ease; }
-  .making .mdone-n{ font-size:11px; color:var(--sub); white-space:nowrap; }
   .add-making{ display:flex; gap:8px; margin-top:4px; }
   .add-making input{ flex:1; border:1px solid var(--line); background:#fff;
     border-radius:12px; padding:11px 13px; font-size:14px; color:var(--ink); }
@@ -421,16 +420,16 @@
       top.querySelector('.mtext').textContent = m.text;
       top.querySelector('.mdel').onclick = function(){ delMaking(m.id); };
       row.appendChild(top);
-      var doneCount = state.todos.filter(function(t){ return t.done && t.makingId===m.id; }).length;
+      var mts = state.todos.filter(function(t){ return t.makingId===m.id; });
+      var doneCount = mts.filter(function(t){ return t.done; }).length;
       if(doneCount>0){
         var dr = document.createElement('div'); dr.className='mdone';
         var bar = document.createElement('div'); bar.className='mbar';
         var fill = document.createElement('div'); fill.className='mbar-fill';
         fill.style.background = m.color;
-        fill.style.width = Math.min(100, doneCount*10) + '%';
+        fill.style.width = Math.round(doneCount/mts.length*100) + '%';
         bar.appendChild(fill);
-        var n = document.createElement('span'); n.className='mdone-n'; n.textContent=doneCount+'こ できた';
-        dr.appendChild(bar); dr.appendChild(n);
+        dr.appendChild(bar);
         row.appendChild(dr);
       }
       ml.appendChild(row);
