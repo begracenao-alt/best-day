@@ -148,7 +148,8 @@
 
   /* 下の入力バー */
   .bar{ position:fixed; left:0; right:0; bottom:0; background:rgba(255,250,252,.95);
-    backdrop-filter:blur(8px); border-top:1px solid var(--line); padding:12px 14px 16px;
+    backdrop-filter:blur(8px); border-top:1px solid var(--line);
+    padding:10px 14px calc(12px + env(safe-area-inset-bottom, 0px));
     max-width:520px; margin:0 auto; }
   .bar .barday{ text-align:center; font-size:11px; color:var(--sub); margin-bottom:8px;
     font-family:"Hiragino Mincho ProN",serif; }
@@ -379,7 +380,9 @@
 
     // 入力バー（過去は見るだけ→隠す）
     document.getElementById('bar').style.display = (sel<today) ? 'none' : '';
-    document.getElementById('barday').textContent = (sel===today) ? '' : (dateLabel(sel)+' に入れます');
+    var bd=document.getElementById('barday');
+    bd.textContent = (sel===today) ? '' : (dateLabel(sel)+' に入れます');
+    bd.style.display = bd.textContent ? 'block' : 'none';
     renderBar();
   }
 
