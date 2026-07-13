@@ -4,21 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>最高の1日を選ぶ</title>
-<meta name="theme-color" content="#fdf9f0">
+<meta name="theme-color" content="#fffafc">
 <meta name="apple-mobile-web-app-title" content="最高の1日">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="icon-512.png">
 <style>
   :root{
-    --bg:#fdf9f0; --card:#ffffff; --ink:#3b4256; --sub:#8f97a8; --line:#ece3d2;
-    --gold:#c9a44e; --gold-d:#a8863a; --gold-lt:#e7d199; --gold-bg:#fbf3e2;
+    --bg:#fffafc; --card:#ffffff; --ink:#2b2f38; --sub:#9096a2; --line:#f4e7ee;
+    --gold:#ff5a8a; --gold-d:#e63e73; --gold-lt:#f7b3c9; --gold-bg:#ffe9f0;
   }
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   html,body{ margin:0; }
   body{
-    background:var(--bg); color:var(--ink);
+    background:
+      radial-gradient(circle at 10% 12%,rgba(205,205,218,.55) 0,rgba(205,205,218,.55) .6px,transparent 1.5px),
+      radial-gradient(circle at 82% 38%,rgba(255,255,255,.9) 0,rgba(255,255,255,.9) .6px,transparent 1.5px),
+      radial-gradient(circle at 46% 86%,rgba(198,198,214,.5) 0,rgba(198,198,214,.5) .6px,transparent 1.4px),
+      radial-gradient(circle at 68% 66%,rgba(255,255,255,.7) 0,rgba(255,255,255,.7) .5px,transparent 1.3px),
+      var(--bg);
+    background-size:72px 72px,94px 94px,82px 82px,60px 60px,100% 100%;
+    background-attachment:fixed;
+    color:var(--ink);
     font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",sans-serif;
-    line-height:1.85; padding:26px 16px 170px; max-width:520px; margin:0 auto;
+    line-height:1.85; padding:26px 16px 230px; max-width:520px; margin:0 auto;
     -webkit-font-smoothing:antialiased;
   }
 
@@ -27,7 +35,7 @@
     font-family:"Hiragino Mincho ProN",serif; }
   .brand-line{ width:36px; height:1px; margin:10px auto 14px;
     background:linear-gradient(90deg,transparent,var(--gold),transparent); }
-  .title{ font-size:23px; letter-spacing:.05em; font-weight:500; color:#b8912f;
+  .title{ font-size:23px; letter-spacing:.05em; font-weight:700; color:#e63e73;
     font-family:"Hiragino Mincho ProN","YuMincho",serif; margin:0; }
   .today{ font-size:13px; color:var(--sub); margin-top:9px;
     font-family:"Hiragino Mincho ProN",serif; letter-spacing:.05em; }
@@ -39,11 +47,21 @@
   .sec-h .hint{ font-size:11.5px; color:var(--sub); margin-left:auto; }
 
   /* 選ぶ世界（ひとつ） */
-  .world{ background:linear-gradient(135deg,#fbf3e2,#fdf9f0); border:1px solid var(--gold-lt);
-    border-radius:18px; padding:20px 18px; text-align:center; }
+  .world{ background:
+      radial-gradient(circle at 12% 20%,#fff 0,#fff .8px,transparent 1.5px),
+      radial-gradient(circle at 78% 28%,#d6d6e0 0,#d6d6e0 .7px,transparent 1.3px),
+      radial-gradient(circle at 40% 74%,#fff 0,#fff .7px,transparent 1.3px),
+      radial-gradient(circle at 88% 82%,#c9c9d4 0,#c9c9d4 .7px,transparent 1.3px),
+      radial-gradient(circle at 24% 52%,#fff 0,#fff .6px,transparent 1.1px),
+      radial-gradient(circle at 62% 60%,#dedee8 0,#dedee8 .6px,transparent 1.1px),
+      linear-gradient(135deg,#ffd6e4,#ffe9f1);
+    background-size:32px 32px,42px 42px,36px 36px,48px 48px,28px 28px,40px 40px,100% 100%;
+    border:1px solid var(--gold-lt);
+    border-radius:18px; padding:20px 18px; text-align:center;
+    box-shadow:0 6px 20px -10px rgba(255,90,138,.4); }
   .world .wlabel{ font-size:10.5px; letter-spacing:.3em; color:var(--gold-d);
     font-family:"Hiragino Mincho ProN",serif; }
-  .world .wtext{ font-size:19px; line-height:1.6; color:#b8912f; margin:8px 0 2px;
+  .world .wtext{ font-size:19px; line-height:1.6; color:#e63e73; margin:8px 0 2px;
     font-family:"Hiragino Mincho ProN","YuMincho",serif; word-break:break-word; }
   .world .wedit{ font-size:12px; color:var(--sub); background:none; border:none;
     cursor:pointer; text-decoration:underline; margin-top:6px; }
@@ -88,7 +106,13 @@
     border-radius:20px; padding:3px 9px; }
   .tdel{ font-size:12px; color:var(--sub); background:none; border:none; cursor:pointer;
     padding:4px 4px; margin-top:-2px; }
-  .todo.done{ background:linear-gradient(135deg,#fdf6e6,#fbefd6); border-color:var(--gold-lt); }
+  .todo.done{ background:
+      radial-gradient(circle at 16% 30%,#fff 0,#fff .7px,transparent 1.3px),
+      radial-gradient(circle at 82% 60%,#d6d6e0 0,#d6d6e0 .6px,transparent 1.1px),
+      radial-gradient(circle at 50% 85%,#fff 0,#fff .5px,transparent 1px),
+      linear-gradient(135deg,#ffe9f1,#ffd9e6);
+    background-size:30px 30px,40px 40px,26px 26px,100% 100%;
+    border-color:var(--gold-lt); }
   .todo.done .check{ background:linear-gradient(135deg,var(--gold),var(--gold-d)); border-color:var(--gold-d); }
   .todo.done .check::after{ opacity:1; }
   .todo.done .ttext{ color:var(--gold-d); }
@@ -97,7 +121,7 @@
     font-family:"Hiragino Mincho ProN",serif; letter-spacing:.03em; }
 
   /* 下の入力バー */
-  .bar{ position:fixed; left:0; right:0; bottom:0; background:rgba(253,249,240,.94);
+  .bar{ position:fixed; left:0; right:0; bottom:0; background:rgba(255,250,252,.95);
     backdrop-filter:blur(8px); border-top:1px solid var(--line); padding:12px 14px 16px;
     max-width:520px; margin:0 auto; }
   .bar .frow{ display:flex; gap:7px; overflow-x:auto; padding-bottom:9px; scrollbar-width:none; }
@@ -112,8 +136,14 @@
     padding:13px 15px; font-size:15px; color:var(--ink); }
   .irow input:focus{ outline:none; border-color:var(--gold-lt); }
   .irow button{ border:none; color:#fff; border-radius:14px; padding:0 20px; font-size:15px;
-    font-weight:700; cursor:pointer; background:linear-gradient(135deg,var(--gold),var(--gold-d));
-    box-shadow:0 8px 18px -8px rgba(168,134,58,.65); }
+    font-weight:700; cursor:pointer;
+    background:
+      radial-gradient(circle at 22% 26%,rgba(255,255,255,.95) 0,rgba(255,255,255,.95) .7px,transparent 1.3px),
+      radial-gradient(circle at 68% 62%,rgba(225,225,235,.85) 0,rgba(225,225,235,.85) .6px,transparent 1.1px),
+      radial-gradient(circle at 48% 40%,rgba(255,255,255,.8) 0,rgba(255,255,255,.8) .5px,transparent 1px),
+      linear-gradient(135deg,var(--gold),var(--gold-d));
+    background-size:24px 24px,30px 30px,20px 20px,100% 100%;
+    box-shadow:0 8px 18px -8px rgba(255,90,138,.6); }
 </style>
 </head>
 <body>
