@@ -18,11 +18,10 @@
   body{
     background:var(--bg); color:var(--ink);
     font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",sans-serif;
-    line-height:1.85; padding:26px 16px 160px; max-width:520px; margin:0 auto;
+    line-height:1.85; padding:26px 16px 170px; max-width:520px; margin:0 auto;
     -webkit-font-smoothing:antialiased;
   }
 
-  /* ヘッダー */
   header{ text-align:center; margin-bottom:22px; }
   .brand{ font-size:12px; letter-spacing:.42em; color:var(--gold-d);
     font-family:"Hiragino Mincho ProN",serif; }
@@ -33,29 +32,43 @@
   .today{ font-size:13px; color:var(--sub); margin-top:9px;
     font-family:"Hiragino Mincho ProN",serif; letter-spacing:.05em; }
 
-  /* セクション見出し */
   .sec-h{ display:flex; align-items:center; gap:9px; margin:26px 3px 12px; }
   .sec-h .dot{ width:6px; height:6px; border-radius:50%; background:var(--gold); }
   .sec-h h2{ font-size:15px; font-weight:600; margin:0; letter-spacing:.04em;
     font-family:"Hiragino Mincho ProN",serif; color:var(--ink); }
   .sec-h .hint{ font-size:11.5px; color:var(--sub); margin-left:auto; }
 
-  /* 目指す未来 */
-  .future{ display:flex; align-items:center; gap:10px; background:var(--card);
-    border:1px solid var(--line); border-radius:14px; padding:12px 14px; margin-bottom:9px; }
-  .future .fdot{ width:11px; height:11px; border-radius:50%; flex:none; }
-  .future .ftext{ flex:1; font-size:14.5px; font-family:"Hiragino Mincho ProN",serif; }
-  .future .fdel{ font-size:12px; color:var(--sub); background:none; border:none;
-    cursor:pointer; padding:4px 6px; }
-  .add-future{ display:flex; gap:8px; margin-top:4px; }
-  .add-future input{ flex:1; border:1px solid var(--line); background:#fff;
-    border-radius:12px; padding:11px 13px; font-size:14px; color:var(--ink); }
-  .add-future input:focus{ outline:none; border-color:var(--gold-lt); }
-  .add-future button{ border:none; background:var(--gold-bg); color:var(--gold-d);
+  /* 選ぶ世界（ひとつ） */
+  .world{ background:linear-gradient(135deg,#fbf3e2,#fdf9f0); border:1px solid var(--gold-lt);
+    border-radius:18px; padding:20px 18px; text-align:center; }
+  .world .wlabel{ font-size:10.5px; letter-spacing:.3em; color:var(--gold-d);
+    font-family:"Hiragino Mincho ProN",serif; }
+  .world .wtext{ font-size:19px; line-height:1.6; color:#b8912f; margin:8px 0 2px;
+    font-family:"Hiragino Mincho ProN","YuMincho",serif; word-break:break-word; }
+  .world .wedit{ font-size:12px; color:var(--sub); background:none; border:none;
+    cursor:pointer; text-decoration:underline; margin-top:6px; }
+  .world-add{ display:flex; gap:8px; }
+  .world-add input{ flex:1; border:1px solid var(--line); background:#fff;
+    border-radius:12px; padding:12px 13px; font-size:15px; color:var(--ink); }
+  .world-add input:focus{ outline:none; border-color:var(--gold-lt); }
+  .world-add button{ border:none; background:var(--gold-bg); color:var(--gold-d);
     border-radius:12px; padding:0 16px; font-size:14px; font-weight:700; cursor:pointer; }
-  .fempty{ font-size:12.5px; color:var(--sub); text-align:center; padding:8px 10px 14px; line-height:2; }
 
-  /* 今日のやること */
+  /* 今、創っているもの */
+  .making{ display:flex; align-items:center; gap:10px; background:var(--card);
+    border:1px solid var(--line); border-radius:14px; padding:12px 14px; margin-bottom:9px; }
+  .making .mdot{ width:11px; height:11px; border-radius:50%; flex:none; }
+  .making .mtext{ flex:1; font-size:14.5px; font-family:"Hiragino Mincho ProN",serif; }
+  .making .mdel{ font-size:12px; color:var(--sub); background:none; border:none; cursor:pointer; padding:4px 6px; }
+  .add-making{ display:flex; gap:8px; margin-top:4px; }
+  .add-making input{ flex:1; border:1px solid var(--line); background:#fff;
+    border-radius:12px; padding:11px 13px; font-size:14px; color:var(--ink); }
+  .add-making input:focus{ outline:none; border-color:var(--gold-lt); }
+  .add-making button{ border:none; background:var(--gold-bg); color:var(--gold-d);
+    border-radius:12px; padding:0 16px; font-size:14px; font-weight:700; cursor:pointer; }
+  .mempty{ font-size:12.5px; color:var(--sub); text-align:center; padding:8px 10px 14px; line-height:2; }
+
+  /* 今日、やること */
   .todo{ display:flex; align-items:flex-start; gap:12px; background:var(--card);
     border:1px solid var(--line); border-radius:15px; padding:14px 14px; margin-bottom:10px;
     animation:rise .35s ease; transition:background .35s, border-color .35s; }
@@ -75,15 +88,11 @@
     border-radius:20px; padding:3px 9px; }
   .tdel{ font-size:12px; color:var(--sub); background:none; border:none; cursor:pointer;
     padding:4px 4px; margin-top:-2px; }
-  /* できた状態＝金色にともる */
   .todo.done{ background:linear-gradient(135deg,#fdf6e6,#fbefd6); border-color:var(--gold-lt); }
   .todo.done .check{ background:linear-gradient(135deg,var(--gold),var(--gold-d)); border-color:var(--gold-d); }
   .todo.done .check::after{ opacity:1; }
   .todo.done .ttext{ color:var(--gold-d); }
-
   .tempty{ text-align:center; color:var(--sub); font-size:13.5px; padding:30px 16px; line-height:2.1; }
-
-  /* できたこと */
   .cheer{ text-align:center; font-size:13px; color:var(--gold-d); margin:6px 0 2px;
     font-family:"Hiragino Mincho ProN",serif; letter-spacing:.03em; }
 
@@ -116,20 +125,27 @@
   <div class="today" id="today"></div>
 </header>
 
-<!-- 目指す未来 -->
+<!-- 選ぶ世界（ひとつ） -->
 <div class="sec-h">
-  <span class="dot"></span><h2>なりたい わたし</h2>
+  <span class="dot"></span><h2>選ぶ世界</h2>
+  <span class="hint">ひとつ</span>
+</div>
+<div id="worldBox"></div>
+
+<!-- 今、創っているもの -->
+<div class="sec-h">
+  <span class="dot"></span><h2>今、創っているもの</h2>
   <span class="hint">いくつでも</span>
 </div>
-<div id="futureList"></div>
-<div class="add-future">
-  <input id="futureInput" type="text" placeholder="なりたい わたし・大切にしたいこと" maxlength="40">
-  <button id="futureAdd">追加</button>
+<div id="makingList"></div>
+<div class="add-making">
+  <input id="makingInput" type="text" placeholder="その世界のために、今つくっているもの" maxlength="40">
+  <button id="makingAdd">追加</button>
 </div>
 
-<!-- 今日のやること -->
+<!-- 今日、やること -->
 <div class="sec-h">
-  <span class="dot"></span><h2>今日のやること</h2>
+  <span class="dot"></span><h2>今日、やること</h2>
   <span class="hint" id="progressHint"></span>
 </div>
 <div id="cheer" class="cheer"></div>
@@ -137,7 +153,7 @@
 
 <!-- 下の入力バー -->
 <div class="bar">
-  <div class="frow" id="barFutures"></div>
+  <div class="frow" id="barMakings"></div>
   <div class="irow">
     <input id="todoInput" type="text" placeholder="今日やること を入れる" maxlength="80">
     <button id="todoAdd">入れる</button>
@@ -150,14 +166,21 @@
   var WD = ['日','月','火','水','木','金','土'];
 
   var state = load();
-  var picked = null; // todo追加時に選んでいる未来のid
+  var picked = null; // todo追加時に選んでいる「創っているもの」のid
 
   function load(){
     try{
       var s = JSON.parse(localStorage.getItem(KEY));
-      if(s && s.futures && s.todos) return s;
+      if(s && s.todos){
+        // 古い形（futures）から引き継ぎ
+        if(!s.makings && s.futures) s.makings = s.futures;
+        if(typeof s.world !== 'string') s.world = '';
+        s.makings = s.makings || [];
+        s.todos.forEach(function(t){ if(t.makingId===undefined) t.makingId = (t.futureId!==undefined?t.futureId:null); });
+        return s;
+      }
     }catch(e){}
-    return { futures:[], todos:[] };
+    return { world:'', makings:[], todos:[] };
   }
   function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
 
@@ -168,47 +191,57 @@
   function uid(){ return Date.now().toString(36) + Math.floor(Math.random()*1000).toString(36); }
 
   function nextColor(){
-    var used = state.futures.map(function(f){return f.color;});
+    var used = state.makings.map(function(m){return m.color;});
     for(var i=0;i<PALETTE.length;i++){ if(used.indexOf(PALETTE[i])<0) return PALETTE[i]; }
-    return PALETTE[state.futures.length % PALETTE.length];
+    return PALETTE[state.makings.length % PALETTE.length];
   }
-  function futureById(id){
-    for(var i=0;i<state.futures.length;i++){ if(state.futures[i].id===id) return state.futures[i]; }
+  function makingById(id){
+    for(var i=0;i<state.makings.length;i++){ if(state.makings[i].id===id) return state.makings[i]; }
     return null;
   }
 
-  /* ---- 目指す未来 ---- */
-  function addFuture(){
-    var el = document.getElementById('futureInput');
+  /* ---- 選ぶ世界 ---- */
+  function setWorld(){
+    var el = document.getElementById('worldInput');
+    if(!el) return;
     var t = el.value.trim();
     if(!t) return;
-    state.futures.push({ id:uid(), text:t, color:nextColor() });
+    state.world = t; save(); render();
+  }
+  function editWorld(){
+    var t = prompt('選ぶ世界を書きなおす', state.world);
+    if(t!=null){ state.world = t.trim() || state.world; save(); render(); }
+  }
+
+  /* ---- 今、創っているもの ---- */
+  function addMaking(){
+    var el = document.getElementById('makingInput');
+    var t = el.value.trim();
+    if(!t) return;
+    state.makings.push({ id:uid(), text:t, color:nextColor() });
     el.value=''; save(); render();
   }
-  function delFuture(id){
-    var f = futureById(id);
-    if(!confirm('「'+f.text+'」を消しますか？\n（これにつながっていたやることは、どこにもつながらなくなります）')) return;
-    state.futures = state.futures.filter(function(f){return f.id!==id;});
-    state.todos.forEach(function(t){ if(t.futureId===id) t.futureId=null; });
+  function delMaking(id){
+    var m = makingById(id);
+    if(!confirm('「'+m.text+'」を消しますか？\n（これにつながっていたやることは、どこにもつながらなくなります）')) return;
+    state.makings = state.makings.filter(function(m){return m.id!==id;});
+    state.todos.forEach(function(t){ if(t.makingId===id) t.makingId=null; });
     if(picked===id) picked=null;
     save(); render();
   }
 
-  /* ---- 今日のやること ---- */
+  /* ---- 今日、やること ---- */
   function addTodo(){
     var el = document.getElementById('todoInput');
     var t = el.value.trim();
     if(!t) return;
-    state.todos.push({ id:uid(), text:t, futureId:picked, done:false, created:todayStr(), doneDate:null });
+    state.todos.push({ id:uid(), text:t, makingId:picked, done:false, created:todayStr(), doneDate:null });
     el.value=''; save(); render();
     el.focus();
   }
   function toggleTodo(id){
     state.todos.forEach(function(t){
-      if(t.id===id){
-        t.done = !t.done;
-        t.doneDate = t.done ? todayStr() : null;
-      }
+      if(t.id===id){ t.done = !t.done; t.doneDate = t.done ? todayStr() : null; }
     });
     save(); render();
   }
@@ -220,49 +253,58 @@
   /* ---- 表示 ---- */
   function render(){
     var today = todayStr();
-    // 日付
     var d = new Date();
     document.getElementById('today').textContent =
       (d.getMonth()+1)+'月'+d.getDate()+'日（'+WD[d.getDay()]+'）';
 
-    // 目指す未来
-    var fl = document.getElementById('futureList');
-    fl.innerHTML='';
-    if(state.futures.length===0){
-      fl.innerHTML = '<div class="fempty">まだありません。<br>「今日のやること」が、どんな自分に つながると うれしいですか？🤍</div>';
+    // 選ぶ世界
+    var wb = document.getElementById('worldBox');
+    wb.innerHTML='';
+    if(state.world){
+      var card = document.createElement('div'); card.className='world';
+      card.innerHTML = '<div class="wlabel">生きたい世界</div><div class="wtext"></div><button class="wedit">書きなおす</button>';
+      card.querySelector('.wtext').textContent = state.world;
+      card.querySelector('.wedit').onclick = editWorld;
+      wb.appendChild(card);
     }else{
-      state.futures.forEach(function(f){
-        var row = document.createElement('div'); row.className='future';
-        row.innerHTML =
-          '<span class="fdot" style="background:'+f.color+'"></span>'+
-          '<span class="ftext"></span>'+
-          '<button class="fdel">消す</button>';
-        row.querySelector('.ftext').textContent = f.text;
-        row.querySelector('.fdel').onclick = function(){ delFuture(f.id); };
-        fl.appendChild(row);
+      var box = document.createElement('div'); box.className='world-add';
+      box.innerHTML = '<input id="worldInput" type="text" placeholder="あなたが選ぶ世界を、ひとつ" maxlength="50"><button id="worldAdd">決める</button>';
+      wb.appendChild(box);
+      document.getElementById('worldAdd').onclick = setWorld;
+      document.getElementById('worldInput').addEventListener('keydown', function(e){ if(e.key==='Enter') setWorld(); });
+    }
+
+    // 今、創っているもの
+    var ml = document.getElementById('makingList');
+    ml.innerHTML='';
+    if(state.makings.length===0){
+      ml.innerHTML = '<div class="mempty">まだありません。<br>その世界のために、今つくっているものは？🤍</div>';
+    }else{
+      state.makings.forEach(function(m){
+        var row = document.createElement('div'); row.className='making';
+        row.innerHTML = '<span class="mdot" style="background:'+m.color+'"></span><span class="mtext"></span><button class="mdel">消す</button>';
+        row.querySelector('.mtext').textContent = m.text;
+        row.querySelector('.mdel').onclick = function(){ delMaking(m.id); };
+        ml.appendChild(row);
       });
     }
 
-    // 今日のやること（未完了＝過去分もぜんぶ持ち越して表示）
+    // 今日、やること
     var open = state.todos.filter(function(t){ return !t.done; });
     var doneToday = state.todos.filter(function(t){ return t.done && t.doneDate===today; });
-
     var tl = document.getElementById('todoList');
     tl.innerHTML='';
     if(open.length===0 && doneToday.length===0){
       tl.innerHTML = '<div class="tempty">今日は何をしましょう？<br>下の窓に、ひとつ入れてみてくださいね😊</div>';
     }
-    // 未完了を先、その日できたものを下に
     open.forEach(function(t){ tl.appendChild(todoRow(t, today)); });
     doneToday.forEach(function(t){ tl.appendChild(todoRow(t, today)); });
 
-    // できた数の応援
     var total = open.length + doneToday.length;
     var doneN = doneToday.length;
     document.getElementById('progressHint').textContent = total? (doneN+' / '+total):'';
     var cheer = document.getElementById('cheer');
-    if(doneN>0){ cheer.textContent = '今日は '+doneN+' つ、動けました🤍'; }
-    else{ cheer.textContent=''; }
+    cheer.textContent = doneN>0 ? ('今日は '+doneN+' つ、動けました🤍') : '';
 
     renderBar();
   }
@@ -276,11 +318,11 @@
     var txt = document.createElement('div'); txt.className='ttext'; txt.textContent = t.text;
     body.appendChild(txt);
     var meta = document.createElement('div'); meta.className='meta';
-    var f = t.futureId ? futureById(t.futureId) : null;
-    if(f){
+    var m = t.makingId ? makingById(t.makingId) : null;
+    if(m){
       var chip = document.createElement('span'); chip.className='fchip';
-      chip.innerHTML = '<span class="cdot" style="background:'+f.color+'"></span>';
-      chip.appendChild(document.createTextNode('→ '+f.text+' の真っ最中'));
+      chip.innerHTML = '<span class="cdot" style="background:'+m.color+'"></span>';
+      chip.appendChild(document.createTextNode('→ '+m.text+' の真っ最中'));
       meta.appendChild(chip);
     }
     if(!t.done && t.created && t.created < today){
@@ -295,28 +337,26 @@
   }
 
   function renderBar(){
-    var bf = document.getElementById('barFutures');
+    var bf = document.getElementById('barMakings');
     bf.innerHTML='';
-    if(state.futures.length===0){ return; }
-    // 「未来なし」チップ
+    if(state.makings.length===0){ return; }
     var none = document.createElement('div');
     none.className='barchip'+(picked===null?' on':'');
     none.textContent='えらばない';
     none.onclick=function(){ picked=null; renderBar(); };
     bf.appendChild(none);
-    state.futures.forEach(function(f){
+    state.makings.forEach(function(m){
       var c = document.createElement('div');
-      c.className='barchip'+(picked===f.id?' on':'');
-      c.innerHTML='<span class="cdot" style="background:'+f.color+'"></span>';
-      c.appendChild(document.createTextNode(f.text));
-      c.onclick=function(){ picked = (picked===f.id?null:f.id); renderBar(); };
+      c.className='barchip'+(picked===m.id?' on':'');
+      c.innerHTML='<span class="cdot" style="background:'+m.color+'"></span>';
+      c.appendChild(document.createTextNode(m.text));
+      c.onclick=function(){ picked = (picked===m.id?null:m.id); renderBar(); };
       bf.appendChild(c);
     });
   }
 
-  // イベント
-  document.getElementById('futureAdd').onclick = addFuture;
-  document.getElementById('futureInput').addEventListener('keydown', function(e){ if(e.key==='Enter') addFuture(); });
+  document.getElementById('makingAdd').onclick = addMaking;
+  document.getElementById('makingInput').addEventListener('keydown', function(e){ if(e.key==='Enter') addMaking(); });
   document.getElementById('todoAdd').onclick = addTodo;
   document.getElementById('todoInput').addEventListener('keydown', function(e){ if(e.key==='Enter') addTodo(); });
 
