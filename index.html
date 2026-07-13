@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>最高の1日を選ぶ</title>
+<meta name="theme-color" content="#fdf9f0">
+<meta name="apple-mobile-web-app-title" content="最高の1日">
+<style>
+  :root{
+    --bg:#fdf9f0; --card:#ffffff; --ink:#3b4256; --sub:#8f97a8; --line:#ece3d2;
+    --gold:#c9a44e; --gold-d:#a8863a; --gold-lt:#e7d199; --gold-bg:#fbf3e2;
+  }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body{ margin:0; }
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans",sans-serif;
+    line-height:1.85; padding:26px 16px 160px; max-width:520px; margin:0 auto;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ヘッダー */
+  header{ text-align:center; margin-bottom:22px; }
+  .brand{ font-size:12px; letter-spacing:.42em; color:var(--gold-d);
+    font-family:"Hiragino Mincho ProN",serif; }
+  .brand-line{ width:36px; height:1px; margin:10px auto 14px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+  .title{ font-size:23px; letter-spacing:.05em; font-weight:500; color:#b8912f;
+    font-family:"Hiragino Mincho ProN","YuMincho",serif; margin:0; }
+  .today{ font-size:13px; color:var(--sub); margin-top:9px;
+    font-family:"Hiragino Mincho ProN",serif; letter-spacing:.05em; }
+
+  /* セクション見出し */
+  .sec-h{ display:flex; align-items:center; gap:9px; margin:26px 3px 12px; }
+  .sec-h .dot{ width:6px; height:6px; border-radius:50%; background:var(--gold); }
+  .sec-h h2{ font-size:15px; font-weight:600; margin:0; letter-spacing:.04em;
+    font-family:"Hiragino Mincho ProN",serif; color:var(--ink); }
+  .sec-h .hint{ font-size:11.5px; color:var(--sub); margin-left:auto; }
+
+  /* 目指す未来 */
+  .future{ display:flex; align-items:center; gap:10px; background:var(--card);
+    border:1px solid var(--line); border-radius:14px; padding:12px 14px; margin-bottom:9px; }
+  .future .fdot{ width:11px; height:11px; border-radius:50%; flex:none; }
+  .future .ftext{ flex:1; font-size:14.5px; font-family:"Hiragino Mincho ProN",serif; }
+  .future .fdel{ font-size:12px; color:var(--sub); background:none; border:none;
+    cursor:pointer; padding:4px 6px; }
+  .add-future{ display:flex; gap:8px; margin-top:4px; }
+  .add-future input{ flex:1; border:1px solid var(--line); background:#fff;
+    border-radius:12px; padding:11px 13px; font-size:14px; color:var(--ink); }
+  .add-future input:focus{ outline:none; border-color:var(--gold-lt); }
+  .add-future button{ border:none; background:var(--gold-bg); color:var(--gold-d);
+    border-radius:12px; padding:0 16px; font-size:14px; font-weight:700; cursor:pointer; }
+  .fempty{ font-size:12.5px; color:var(--sub); text-align:center; padding:8px 10px 14px; line-height:2; }
+
+  /* 今日のやること */
+  .todo{ display:flex; align-items:flex-start; gap:12px; background:var(--card);
+    border:1px solid var(--line); border-radius:15px; padding:14px 14px; margin-bottom:10px;
+    animation:rise .35s ease; transition:background .35s, border-color .35s; }
+  @keyframes rise{ from{ opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;} }
+  .check{ width:24px; height:24px; border-radius:50%; border:1.8px solid var(--gold-lt);
+    flex:none; margin-top:1px; cursor:pointer; position:relative; transition:.25s; }
+  .check::after{ content:"✓"; position:absolute; inset:0; display:flex; align-items:center;
+    justify-content:center; font-size:14px; color:#fff; opacity:0; transition:.25s; }
+  .todo .body{ flex:1; min-width:0; }
+  .todo .ttext{ font-size:15px; letter-spacing:.01em; word-break:break-word; }
+  .todo .meta{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:7px; }
+  .fchip{ display:inline-flex; align-items:center; gap:5px; font-size:11.5px;
+    color:var(--ink); background:#faf7f0; border:1px solid var(--line);
+    border-radius:20px; padding:3px 10px; }
+  .fchip .cdot{ width:8px; height:8px; border-radius:50%; }
+  .carry{ font-size:11px; color:var(--gold-d); background:var(--gold-bg);
+    border-radius:20px; padding:3px 9px; }
+  .tdel{ font-size:12px; color:var(--sub); background:none; border:none; cursor:pointer;
+    padding:4px 4px; margin-top:-2px; }
+  /* できた状態＝金色にともる */
+  .todo.done{ background:linear-gradient(135deg,#fdf6e6,#fbefd6); border-color:var(--gold-lt); }
+  .todo.done .check{ background:linear-gradient(135deg,var(--gold),var(--gold-d)); border-color:var(--gold-d); }
+  .todo.done .check::after{ opacity:1; }
+  .todo.done .ttext{ color:var(--gold-d); }
+
+  .tempty{ text-align:center; color:var(--sub); font-size:13.5px; padding:30px 16px; line-height:2.1; }
+
+  /* できたこと */
+  .cheer{ text-align:center; font-size:13px; color:var(--gold-d); margin:6px 0 2px;
+    font-family:"Hiragino Mincho ProN",serif; letter-spacing:.03em; }
+
+  /* 下の入力バー */
+  .bar{ position:fixed; left:0; right:0; bottom:0; background:rgba(253,249,240,.94);
+    backdrop-filter:blur(8px); border-top:1px solid var(--line); padding:12px 14px 16px;
+    max-width:520px; margin:0 auto; }
+  .bar .frow{ display:flex; gap:7px; overflow-x:auto; padding-bottom:9px; scrollbar-width:none; }
+  .bar .frow::-webkit-scrollbar{ display:none; }
+  .barchip{ flex:none; display:inline-flex; align-items:center; gap:6px; font-size:12px;
+    border:1px solid var(--line); background:#fff; color:var(--sub); border-radius:20px;
+    padding:6px 12px; cursor:pointer; white-space:nowrap; }
+  .barchip .cdot{ width:8px; height:8px; border-radius:50%; }
+  .barchip.on{ background:var(--gold-bg); color:var(--gold-d); border-color:var(--gold-lt); font-weight:700; }
+  .irow{ display:flex; gap:8px; }
+  .irow input{ flex:1; border:1px solid var(--line); background:#fff; border-radius:14px;
+    padding:13px 15px; font-size:15px; color:var(--ink); }
+  .irow input:focus{ outline:none; border-color:var(--gold-lt); }
+  .irow button{ border:none; color:#fff; border-radius:14px; padding:0 20px; font-size:15px;
+    font-weight:700; cursor:pointer; background:linear-gradient(135deg,var(--gold),var(--gold-d));
+    box-shadow:0 8px 18px -8px rgba(168,134,58,.65); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Be Grace</div>
+  <div class="brand-line"></div>
+  <h1 class="title">最高の1日を選ぶ</h1>
+  <div class="today" id="today"></div>
+</header>
+
+<!-- 目指す未来 -->
+<div class="sec-h">
+  <span class="dot"></span><h2>なりたい わたし</h2>
+  <span class="hint">いくつでも</span>
+</div>
+<div id="futureList"></div>
+<div class="add-future">
+  <input id="futureInput" type="text" placeholder="なりたい わたし・大切にしたいこと" maxlength="40">
+  <button id="futureAdd">追加</button>
+</div>
+
+<!-- 今日のやること -->
+<div class="sec-h">
+  <span class="dot"></span><h2>今日のやること</h2>
+  <span class="hint" id="progressHint"></span>
+</div>
+<div id="cheer" class="cheer"></div>
+<div id="todoList"></div>
+
+<!-- 下の入力バー -->
+<div class="bar">
+  <div class="frow" id="barFutures"></div>
+  <div class="irow">
+    <input id="todoInput" type="text" placeholder="今日やること を入れる" maxlength="80">
+    <button id="todoAdd">入れる</button>
+  </div>
+</div>
+
+<script>
+  var KEY = 'begrace-best-day';
+  var PALETTE = ['#dd9aa6','#e6b877','#9aa2b8','#a9c2a0','#c6a4c4','#d8b48a','#7d86a6','#c98f7a'];
+  var WD = ['日','月','火','水','木','金','土'];
+
+  var state = load();
+  var picked = null; // todo追加時に選んでいる未来のid
+
+  function load(){
+    try{
+      var s = JSON.parse(localStorage.getItem(KEY));
+      if(s && s.futures && s.todos) return s;
+    }catch(e){}
+    return { futures:[], todos:[] };
+  }
+  function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
+
+  function ymd(d){
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  }
+  function todayStr(){ return ymd(new Date()); }
+  function uid(){ return Date.now().toString(36) + Math.floor(Math.random()*1000).toString(36); }
+
+  function nextColor(){
+    var used = state.futures.map(function(f){return f.color;});
+    for(var i=0;i<PALETTE.length;i++){ if(used.indexOf(PALETTE[i])<0) return PALETTE[i]; }
+    return PALETTE[state.futures.length % PALETTE.length];
+  }
+  function futureById(id){
+    for(var i=0;i<state.futures.length;i++){ if(state.futures[i].id===id) return state.futures[i]; }
+    return null;
+  }
+
+  /* ---- 目指す未来 ---- */
+  function addFuture(){
+    var el = document.getElementById('futureInput');
+    var t = el.value.trim();
+    if(!t) return;
+    state.futures.push({ id:uid(), text:t, color:nextColor() });
+    el.value=''; save(); render();
+  }
+  function delFuture(id){
+    var f = futureById(id);
+    if(!confirm('「'+f.text+'」を消しますか？\n（これにつながっていたやることは、どこにもつながらなくなります）')) return;
+    state.futures = state.futures.filter(function(f){return f.id!==id;});
+    state.todos.forEach(function(t){ if(t.futureId===id) t.futureId=null; });
+    if(picked===id) picked=null;
+    save(); render();
+  }
+
+  /* ---- 今日のやること ---- */
+  function addTodo(){
+    var el = document.getElementById('todoInput');
+    var t = el.value.trim();
+    if(!t) return;
+    state.todos.push({ id:uid(), text:t, futureId:picked, done:false, created:todayStr(), doneDate:null });
+    el.value=''; save(); render();
+    el.focus();
+  }
+  function toggleTodo(id){
+    state.todos.forEach(function(t){
+      if(t.id===id){
+        t.done = !t.done;
+        t.doneDate = t.done ? todayStr() : null;
+      }
+    });
+    save(); render();
+  }
+  function delTodo(id){
+    state.todos = state.todos.filter(function(t){return t.id!==id;});
+    save(); render();
+  }
+
+  /* ---- 表示 ---- */
+  function render(){
+    var today = todayStr();
+    // 日付
+    var d = new Date();
+    document.getElementById('today').textContent =
+      (d.getMonth()+1)+'月'+d.getDate()+'日（'+WD[d.getDay()]+'）';
+
+    // 目指す未来
+    var fl = document.getElementById('futureList');
+    fl.innerHTML='';
+    if(state.futures.length===0){
+      fl.innerHTML = '<div class="fempty">まだありません。<br>「今日のやること」が、どんな自分に つながると うれしいですか？🤍</div>';
+    }else{
+      state.futures.forEach(function(f){
+        var row = document.createElement('div'); row.className='future';
+        row.innerHTML =
+          '<span class="fdot" style="background:'+f.color+'"></span>'+
+          '<span class="ftext"></span>'+
+          '<button class="fdel">消す</button>';
+        row.querySelector('.ftext').textContent = f.text;
+        row.querySelector('.fdel').onclick = function(){ delFuture(f.id); };
+        fl.appendChild(row);
+      });
+    }
+
+    // 今日のやること（未完了＝過去分もぜんぶ持ち越して表示）
+    var open = state.todos.filter(function(t){ return !t.done; });
+    var doneToday = state.todos.filter(function(t){ return t.done && t.doneDate===today; });
+
+    var tl = document.getElementById('todoList');
+    tl.innerHTML='';
+    if(open.length===0 && doneToday.length===0){
+      tl.innerHTML = '<div class="tempty">今日は何をしましょう？<br>下の窓に、ひとつ入れてみてくださいね😊</div>';
+    }
+    // 未完了を先、その日できたものを下に
+    open.forEach(function(t){ tl.appendChild(todoRow(t, today)); });
+    doneToday.forEach(function(t){ tl.appendChild(todoRow(t, today)); });
+
+    // できた数の応援
+    var total = open.length + doneToday.length;
+    var doneN = doneToday.length;
+    document.getElementById('progressHint').textContent = total? (doneN+' / '+total):'';
+    var cheer = document.getElementById('cheer');
+    if(doneN>0){ cheer.textContent = '今日は '+doneN+' つ、動けました🤍'; }
+    else{ cheer.textContent=''; }
+
+    renderBar();
+  }
+
+  function todoRow(t, today){
+    var row = document.createElement('div');
+    row.className = 'todo' + (t.done?' done':'');
+    var chk = document.createElement('div'); chk.className='check';
+    chk.onclick = function(){ toggleTodo(t.id); };
+    var body = document.createElement('div'); body.className='body';
+    var txt = document.createElement('div'); txt.className='ttext'; txt.textContent = t.text;
+    body.appendChild(txt);
+    var meta = document.createElement('div'); meta.className='meta';
+    var f = t.futureId ? futureById(t.futureId) : null;
+    if(f){
+      var chip = document.createElement('span'); chip.className='fchip';
+      chip.innerHTML = '<span class="cdot" style="background:'+f.color+'"></span>';
+      chip.appendChild(document.createTextNode('→ '+f.text+' の真っ最中'));
+      meta.appendChild(chip);
+    }
+    if(!t.done && t.created && t.created < today){
+      var c = document.createElement('span'); c.className='carry'; c.textContent='昨日から';
+      meta.appendChild(c);
+    }
+    if(meta.children.length) body.appendChild(meta);
+    var del = document.createElement('button'); del.className='tdel'; del.textContent='×';
+    del.onclick = function(){ delTodo(t.id); };
+    row.appendChild(chk); row.appendChild(body); row.appendChild(del);
+    return row;
+  }
+
+  function renderBar(){
+    var bf = document.getElementById('barFutures');
+    bf.innerHTML='';
+    if(state.futures.length===0){ return; }
+    // 「未来なし」チップ
+    var none = document.createElement('div');
+    none.className='barchip'+(picked===null?' on':'');
+    none.textContent='えらばない';
+    none.onclick=function(){ picked=null; renderBar(); };
+    bf.appendChild(none);
+    state.futures.forEach(function(f){
+      var c = document.createElement('div');
+      c.className='barchip'+(picked===f.id?' on':'');
+      c.innerHTML='<span class="cdot" style="background:'+f.color+'"></span>';
+      c.appendChild(document.createTextNode(f.text));
+      c.onclick=function(){ picked = (picked===f.id?null:f.id); renderBar(); };
+      bf.appendChild(c);
+    });
+  }
+
+  // イベント
+  document.getElementById('futureAdd').onclick = addFuture;
+  document.getElementById('futureInput').addEventListener('keydown', function(e){ if(e.key==='Enter') addFuture(); });
+  document.getElementById('todoAdd').onclick = addTodo;
+  document.getElementById('todoInput').addEventListener('keydown', function(e){ if(e.key==='Enter') addTodo(); });
+
+  render();
+</script>
+</body>
+</html>
