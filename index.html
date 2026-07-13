@@ -79,9 +79,10 @@
   .making .mdot{ width:11px; height:11px; border-radius:50%; flex:none; }
   .making .mtext{ flex:1; font-size:14.5px; font-family:"Hiragino Mincho ProN",serif; }
   .making .mdel{ font-size:12px; color:var(--sub); background:none; border:none; cursor:pointer; padding:4px 6px; }
-  .making .mdone{ display:flex; align-items:center; flex-wrap:wrap; gap:5px; margin:10px 0 1px; padding-left:21px; }
-  .making .pdot{ width:9px; height:9px; border-radius:50%; box-shadow:0 1px 2px rgba(0,0,0,.12); }
-  .making .mdone-n{ font-size:11px; color:var(--sub); margin-left:5px; }
+  .making .mdone{ display:flex; align-items:center; gap:9px; margin:11px 0 1px; padding-left:21px; }
+  .making .mbar{ flex:1; height:8px; border-radius:6px; background:#f2e7ee; overflow:hidden; max-width:190px; }
+  .making .mbar-fill{ height:100%; border-radius:6px; transition:width .45s ease; }
+  .making .mdone-n{ font-size:11px; color:var(--sub); white-space:nowrap; }
   .add-making{ display:flex; gap:8px; margin-top:4px; }
   .add-making input{ flex:1; border:1px solid var(--line); background:#fff;
     border-radius:12px; padding:11px 13px; font-size:14px; color:var(--ink); }
@@ -423,9 +424,13 @@
       var doneCount = state.todos.filter(function(t){ return t.done && t.makingId===m.id; }).length;
       if(doneCount>0){
         var dr = document.createElement('div'); dr.className='mdone';
-        for(var i=0;i<doneCount;i++){ var p=document.createElement('span'); p.className='pdot'; p.style.background=m.color; dr.appendChild(p); }
+        var bar = document.createElement('div'); bar.className='mbar';
+        var fill = document.createElement('div'); fill.className='mbar-fill';
+        fill.style.background = m.color;
+        fill.style.width = Math.min(100, doneCount*10) + '%';
+        bar.appendChild(fill);
         var n = document.createElement('span'); n.className='mdone-n'; n.textContent=doneCount+'こ できた';
-        dr.appendChild(n);
+        dr.appendChild(bar); dr.appendChild(n);
         row.appendChild(dr);
       }
       ml.appendChild(row);
