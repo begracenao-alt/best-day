@@ -509,7 +509,7 @@
     if(m){
       var chip = document.createElement('span'); chip.className='fchip';
       chip.innerHTML = '<span class="cdot" style="background:'+m.color+'"></span>';
-      chip.appendChild(document.createTextNode('→ '+m.text));
+      chip.appendChild(document.createTextNode(m.text));
       meta.appendChild(chip);
     }
     if(!t.done && sel===today && t.date < today){
