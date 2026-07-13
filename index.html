@@ -295,7 +295,7 @@
     var tl = document.getElementById('todoList');
     tl.innerHTML='';
     if(open.length===0 && doneToday.length===0){
-      tl.innerHTML = '<div class="tempty">今日は何をしましょう？<br>下の窓に、ひとつ入れてみてくださいね😊</div>';
+      tl.innerHTML = '<div class="tempty">下の窓から、今日やることを入れてください。</div>';
     }
     open.forEach(function(t){ tl.appendChild(todoRow(t, today)); });
     doneToday.forEach(function(t){ tl.appendChild(todoRow(t, today)); });
