@@ -271,6 +271,13 @@
     for(var i=0;i<state.makings.length;i++){ if(state.makings[i].id===id) return state.makings[i]; }
     return null;
   }
+  function darken(hex, f){
+    var h = String(hex).replace('#','');
+    if(h.length<6) return hex;
+    var r=parseInt(h.slice(0,2),16), g=parseInt(h.slice(2,4),16), b=parseInt(h.slice(4,6),16);
+    r=Math.round(r*(1-f)); g=Math.round(g*(1-f)); b=Math.round(b*(1-f));
+    return 'rgb('+r+','+g+','+b+')';
+  }
 
   /* ---- 選ぶ世界 ---- */
   function setWorld(){
@@ -420,14 +427,16 @@
       top.querySelector('.mtext').textContent = m.text;
       top.querySelector('.mdel').onclick = function(){ delMaking(m.id); };
       row.appendChild(top);
-      var mts = state.todos.filter(function(t){ return t.makingId===m.id; });
-      var doneCount = mts.filter(function(t){ return t.done; }).length;
+      var doneCount = state.todos.filter(function(t){ return t.done && t.makingId===m.id; }).length;
       if(doneCount>0){
+        var STEP = 5, lap, prog;
+        if(doneCount % STEP === 0){ lap = doneCount/STEP - 1; prog = 100; }
+        else { lap = Math.floor(doneCount/STEP); prog = (doneCount % STEP)/STEP*100; }
         var dr = document.createElement('div'); dr.className='mdone';
         var bar = document.createElement('div'); bar.className='mbar';
         var fill = document.createElement('div'); fill.className='mbar-fill';
-        fill.style.background = m.color;
-        fill.style.width = Math.round(doneCount/mts.length*100) + '%';
+        fill.style.background = darken(m.color, Math.min(0.45, lap*0.16));
+        fill.style.width = prog + '%';
         bar.appendChild(fill);
         dr.appendChild(bar);
         row.appendChild(dr);
