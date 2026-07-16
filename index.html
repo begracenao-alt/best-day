@@ -79,9 +79,13 @@
   .making .mdot{ width:11px; height:11px; border-radius:50%; flex:none; }
   .making .mtext{ flex:1; font-size:14.5px; font-family:"Hiragino Mincho ProN",serif; }
   .making .mdel{ font-size:12px; color:var(--sub); background:none; border:none; cursor:pointer; padding:4px 6px; }
-  .making .mdone{ margin:11px 0 2px; padding-left:21px; padding-right:2px; }
-  .making .mbar{ height:8px; border-radius:6px; background:#f2e7ee; overflow:hidden; }
+  .making .mdone{ margin:11px 0 2px; padding-left:21px; padding-right:2px;
+    display:flex; align-items:center; gap:10px; }
+  .making .mbar{ flex:1; height:8px; border-radius:6px; background:#f2e7ee; overflow:hidden; }
   .making .mbar-fill{ height:100%; border-radius:6px; transition:width .45s ease; }
+  .making .mnum{ flex:none; min-width:38px; text-align:right; font-size:11.5px; color:var(--sub);
+    font-family:"Hiragino Mincho ProN",serif; letter-spacing:.02em; }
+  .making .mnum.full{ color:var(--gold-d); font-weight:700; }
   .add-making{ display:flex; gap:8px; margin-top:4px; }
   .add-making input{ flex:1; border:1px solid var(--line); background:#fff;
     border-radius:12px; padding:11px 13px; font-size:14px; color:var(--ink); }
@@ -228,6 +232,7 @@
 
 <script>
   var KEY = 'begrace-best-day';
+  var GOAL = 100;         // 線が満杯になる数（これを超えたら、その数が新しい満杯になる）
   var PALETTE = ['#dd9aa6','#e6b877','#9aa2b8','#a9c2a0','#c6a4c4','#d8b48a','#7d86a6','#c98f7a'];
   var WD = ['日','月','火','水','木','金','土'];
 
@@ -414,12 +419,21 @@
     }
   }
 
+  function doneCountOf(id){
+    return state.todos.filter(function(t){ return t.done && t.makingId===id; }).length;
+  }
+
   function renderMakings(){
     var ml = document.getElementById('makingList'); ml.innerHTML='';
     if(state.makings.length===0){
       ml.innerHTML = '<div class="mempty">まだありません。<br>その世界のために、今つくっているものは？🤍</div>';
       return;
     }
+    // 満杯の基準＝100か、いちばん多い数の、大きい方（0にはもどさない）
+    var maxCount = 0;
+    state.makings.forEach(function(m){ var c=doneCountOf(m.id); if(c>maxCount) maxCount=c; });
+    var full = Math.max(GOAL, maxCount);
+
     state.makings.forEach(function(m){
       var row = document.createElement('div'); row.className='making';
       var top = document.createElement('div'); top.className='mrow';
@@ -427,20 +441,20 @@
       top.querySelector('.mtext').textContent = m.text;
       top.querySelector('.mdel').onclick = function(){ delMaking(m.id); };
       row.appendChild(top);
-      var doneCount = state.todos.filter(function(t){ return t.done && t.makingId===m.id; }).length;
-      if(doneCount>0){
-        var STEP = 5, lap, prog;
-        if(doneCount % STEP === 0){ lap = doneCount/STEP - 1; prog = 100; }
-        else { lap = Math.floor(doneCount/STEP); prog = (doneCount % STEP)/STEP*100; }
-        var dr = document.createElement('div'); dr.className='mdone';
-        var bar = document.createElement('div'); bar.className='mbar';
-        var fill = document.createElement('div'); fill.className='mbar-fill';
-        fill.style.background = darken(m.color, Math.min(0.45, lap*0.16));
-        fill.style.width = prog + '%';
-        bar.appendChild(fill);
-        dr.appendChild(bar);
-        row.appendChild(dr);
-      }
+
+      var doneCount = doneCountOf(m.id);
+      var reached = doneCount >= GOAL;               // 100に届いたら満杯🤍
+      var prog = full>0 ? (doneCount/full*100) : 0;
+      var dr = document.createElement('div'); dr.className='mdone';
+      var bar = document.createElement('div'); bar.className='mbar';
+      var fill = document.createElement('div'); fill.className='mbar-fill';
+      fill.style.background = darken(m.color, reached ? 0.28 : 0);
+      fill.style.width = prog + '%';
+      bar.appendChild(fill);
+      var num = document.createElement('div'); num.className='mnum'+(reached?' full':'');
+      num.textContent = reached ? (doneCount+'こ 🤍') : (doneCount+'こ');
+      dr.appendChild(bar); dr.appendChild(num);
+      row.appendChild(dr);
       ml.appendChild(row);
     });
   }
